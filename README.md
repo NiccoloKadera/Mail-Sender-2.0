@@ -8,57 +8,57 @@
 It is a wrapper that let you send and build HTML with a gmail e-mail address. This tool can also respond to mail in your mailbox.
 
 This script is built using the following dependencies:
- - email
- - smtplib
- - imaplib
+ - email  
+ - smtplib  
+ - imaplib  
 
 Set-up:
 To set up please configure the following files:
 
-userInfo.json -> {
-    "name": "", (Es: "Niccolò Kadera")
-    "myEmail": "", (Es: "niccolokadera@gmail.com")
-    "gmailPass": "", (Go to: https://myaccount.google.com/ -> Security -> Two-step verification -> login -> scroll down -> Passwords for apps -> Set MailSender as name and paste the gmail password)
-    "instagram_url": "", (Es: "https://www.instagram.com/kadera_niccolo/")
-    "linkedin_url": "", (Es: "https://www.linkedin.com/in/niccolò-kadera-6b5aa3207")
-    "fiverr_url": "", (Es: "https://www.fiverr.com/niccolo_kadera")
-    "x_url": "", (Es: "https://twitter.com/KaderaNiccolo")
-    "profile_pic_url": "",
-    "profile_url": "" (Es: "https://niccolokadera.github.io/Portfolio/")
+userInfo.json -> {  
+    "name": "", (Es: "Niccolò Kadera")  
+    "myEmail": "", (Es: "niccolokadera@gmail.com")  
+    "gmailPass": "", (Go to: https://myaccount.google.com/ -> Security -> Two-step verification -> login -> scroll down -> Passwords for apps -> Set MailSender as name and paste the gmail password)  
+    "instagram_url": "", (Es: "https://www.instagram.com/kadera_niccolo/")  
+    "linkedin_url": "", (Es: "https://www.linkedin.com/in/niccolò-kadera-6b5aa3207")  
+    "fiverr_url": "", (Es: "https://www.fiverr.com/niccolo_kadera")  
+    "x_url": "", (Es: "https://twitter.com/KaderaNiccolo")  
+    "profile_pic_url": "",  
+    "profile_url": "" (Es: "https://niccolokadera.github.io/Portfolio/")  
 }
 
 
 
-To respond and view e-mails in your mail box:
+To respond and view e-mails in your mail box:  
   Go to: Gmail.com -> settings (top right) -> view all settings -> POP/IMAP -> Set IMAP access to enable
 
 
 
-You can also send pre compiled HTML e-mails, to do so place .html files in the Templates/ folder and configure mailInfoIt.json as:
-
-mailInfoIt.json -> {
-    "Subject": "", (Identifies the subject of the email)
-    "Recipient_email": "", (This is the list of people you are sending the e-mail to, please spearate e-mail addresses with ", ")
-    "Mail_path": "", (The relative path to the .html file in Templates/ folder. Es: Templates/example.html)
-    "Attachments_Bool": true, (To enable sending the attachments specified below [true/false])
-    "Attachments": "" (This is the list of the attachments to send with the e-mail. These must be contained in Attachments/ folder, please spearate attachments names with ", " Es: example.txt, exampleTwo.txt)
-}
-
-
+You can also send pre compiled HTML e-mails, to do so place .html files in the Templates/ folder and configure mailInfoIt.json as:  
+  
+mailInfoIt.json -> {  
+    "Subject": "", (Identifies the subject of the email)  
+    "Recipient_email": "", (This is the list of people you are sending the e-mail to, please spearate e-mail addresses with ", ")  
+    "Mail_path": "", (The relative path to the .html file in Templates/ folder. Es: Templates/example.html)  
+    "Attachments_Bool": true, (To enable sending the attachments specified below [true/false])  
+    "Attachments": "" (This is the list of the attachments to send with the e-mail. These must be contained in Attachments/ folder, please spearate attachments names with ", " Es: example.txt, exampleTwo.txt)  
+}  
 
 
 
-🇮🇹 Italian
-È un wrapper che ti consente di inviare e creare HTML con un indirizzo e-mail gmail. Questo strumento può anche rispondere alla posta nella tua casella di posta.
 
-Questo script è costruito utilizzando le seguenti dipendenze:
- - email
- - smtplib
- - imaplib
 
-Configurazione:
-Per configurare, impostare correttamente i seguenti file:
-userInfo.json -> {
+🇮🇹 Italian  
+È un wrapper che ti consente di inviare e creare HTML con un indirizzo e-mail gmail. Questo strumento può anche rispondere alla posta nella tua casella di posta.  
+
+Questo script è costruito utilizzando le seguenti dipendenze:  
+ - email  
+ - smtplib  
+ - imaplib  
+
+Configurazione:  
+Per configurare, impostare correttamente i seguenti file:  
+userInfo.json -> {  
     "name": "", (Es: "Niccolò Kadera")
     "myEmail": "", (Es: "niccolokadera@gmail.com")
     "gmailPass": "", (Vai a: https://myaccount.google.com/ -> Sicurezza -> Verifica in due passaggi -> login -> scorri verso il basso -> Password per le app -> Imposta MailSender come nome e incolla la password di gmail)
