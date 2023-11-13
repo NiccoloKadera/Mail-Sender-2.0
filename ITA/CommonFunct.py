@@ -1,14 +1,6 @@
 import os
 import json
-from email.mime.text import MIMEText
-from http import server
-import smtplib
 import os
-import time
-from email.mime.multipart import MIMEMultipart
-from email.mime.base import MIMEBase
-import csv
-from email import encoders
 
 class CF:
 
@@ -57,77 +49,6 @@ class CF:
         else:
             print("Unable to write %s file in current directory." % name)
 
-    def csvLoader(path: str, id: int):
-        with open(path, newline="", encoding="ISO-8859-1") as fileCSV:
-            risultato = []
-            lettore = csv.reader(fileCSV)
-            for riga in lettore:
-                risultato.append(riga[id])
-            return risultato
-
-    def GetCsvId(path: str):
-        with open(path, newline="", encoding="ISO-8859-1") as fileCSV:
-            lettore = csv.reader(fileCSV)
-            header = next(lettore)
-            return header
-
-    def sendHtmlEmail(myemail: str, email: str, Subject: str, html: str, email_pass, Allegato_codificato = "") -> None:
-        em = MIMEMultipart()
-        em["From"] = myemail
-        em["To"] = email
-        em["Subject"] = Subject
-        
-        htmlPart = MIMEText(html, "html")
-        em.attach(htmlPart)
-
-        if Allegato_codificato != "":
-            cont = 1
-            for item in Allegato_codificato:
-                print("Adding attachments: %d..." % cont)
-                if cont == 1:
-                    allegat_str = "Allegati:"
-                else:
-                    allegat_str = ""
-                cont += 1
-                em.attach(MIMEText(allegat_str, "plain"))
-                em.attach(item)
-        
-        server = smtplib.SMTP("smtp.gmail.com", 587)
-        server.starttls()
-        server.login(myemail, email_pass)
-        print("Log in Success")
-        if Allegato_codificato != "":
-            print("Email with attachments could take several minutes to be sent.")
-        server.sendmail(myemail, email, em.as_string())
-        print("Success...")
-
-        print("", end="")
-        for i in range(0, 20):
-            print("-", end="")
-
-        print("> Email inviata a %s.\n" % email, end="")
-        print()
-        time.sleep(0.5)
-
-    def MIMEBase_Attachments(Percorso_File):
-        with open(Percorso_File, "rb") as file:
-            part = MIMEBase("application", "octet-stream")
-            part.set_payload(file.read())
-        return part
-
-    def encoder_base64(file: MIMEBase, filename: str):
-        encoders.encode_base64(file)
-        file.add_header("Content-Disposition", f"attachment; filename={filename}")
-        return file
-
-    def isArray(Variable) -> bool:
-        try:
-            Variable.append("a")
-            result = True
-        except:
-            result = False
-        print(Variable)
-        return result
 
     def Menu_Bool(Testo: str, Opzioni: list, Opzione_Corretta: int, Messaggio_Finale: str) -> bool:
         risultato = False
@@ -169,4 +90,3 @@ class CF:
                 str_tot += risposta
             cont += 1
         return str_tot
-

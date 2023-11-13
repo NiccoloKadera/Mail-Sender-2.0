@@ -82,7 +82,7 @@ class MailSender:
         server.login(self.__myEmail, self.__email_pass)
         print("\n\n - Log in Success")
         if len(mail.attachmentsFullEncodedArr) > 0:
-            print(self.__langDict['26'])
+            print(' - ' + self.__langDict['26'])
 
         em["To"] = ""
         for email in mail.recEmailsArr:
