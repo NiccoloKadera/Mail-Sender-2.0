@@ -78,7 +78,7 @@ class Mail:
             print("Error! Webbrowser error, unable to open temp/mail.html with browser")
 
     def importInfo(self):
-        data_dict = CF.jsonLoader(f"Info{self.__lang}.json")
+        data_dict = CF.jsonLoader(f"mailInfo{self.__lang}.json")
         
         self.subject = data_dict[self.__data_dict_keys[0]]
         if self.subject == '' or self.subject.isspace():
