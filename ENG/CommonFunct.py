@@ -84,7 +84,7 @@ class CF:
             risposta = input("")
             if cont != 0 and risposta != TerminaCon:
                 str_tot += "\n"
-            if risposta == TerminaCon or risposta == "" or risposta.isspace():
+            if risposta == TerminaCon:
                 continua = False
             else:
                 str_tot += risposta

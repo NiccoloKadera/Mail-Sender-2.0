@@ -361,7 +361,11 @@ class HTMLMailBuilder:
         ''')
 
 
-    def addText(self, text: str, align: str = 'left'):
+    def addText(self, text: str, align: str = 'left', title: str = ""):
+            if title != "":
+                title_str = f'<p style="font-size: 20px; font-weight: bold;">{title}</p>'
+            else:
+                title_str = ""
             initial = f"""<!-- Title, Text area -->
 
                 <tr>
@@ -369,6 +373,7 @@ class HTMLMailBuilder:
                         <table width="100%">
                             <tr>
                                 <td style="text-align: center; padding: 15px;">
+                                {title_str}
                                 <p style="line-height: 23px; text-align: {align}; font-size: 15px; padding: 5px 0 15px;">"""
             for i,line in enumerate(text.splitlines()):
                 initial += f'{line}'
@@ -384,8 +389,9 @@ class HTMLMailBuilder:
             self.__fullMailArr.append(final)
         
     def addTextWrapper(self, align):
+        mailTitle = CF.Menu_Text(self.__langDict['58'], "0")
         mailText = CF.Menu_Text(self.__langDict['17'], "0")
-        self.addText(mailText, align)
+        self.addText(mailText, align, mailTitle)
     
     def addImage(self, imageUrl: str = "", imagWidth = ""):
         if imageUrl == "" or imageUrl.isspace():

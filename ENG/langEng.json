@@ -55,5 +55,6 @@
     "54": " - Image with text",
     "55": "IMPORTANT! Sure you want to restore memory? [y/n] ",
     "56": "memDict.json successfully restored!",
-    "57": "Program not configured:\n - Before using the program correctly configure userInfo.json (requirements: name, myEmail, gmailPass);\n - This program requires a google mail (gmail) for sending;\n - Set in the gmailPass field the password for the apps generated in section 2fa."
+    "57": "Program not configured:\n - Before using the program correctly configure userInfo.json (requirements: name, myEmail, gmailPass);\n - This program requires a google mail (gmail) for sending;\n - Set in the gmailPass field the password for the apps generated in section 2fa.",
+    "58": "Please enter title, 0 to omit it: "
 }
