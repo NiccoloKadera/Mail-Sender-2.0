@@ -31,7 +31,7 @@ class CF:
     def jsonLoader(name: str) -> str:
         if name in CF.__directoryFiles or os.path.exists(name):
             try:
-                with open(name) as file:
+                with open(name, encoding="utf-8") as file:
                     content = json.load(file)
             except Exception:
                 print("Unable to load %s file, unexpected error." % name)

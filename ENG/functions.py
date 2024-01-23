@@ -93,7 +93,7 @@ class Mail:
         self.__mailPath = data_dict[self.__data_dict_keys[2]]
         if self.__mailPath == '' or self.__mailPath.isspace():
             self.__mailPath = input(self.__langDict['34'])
-        with open(self.__mailPath, "r") as file:
+        with open(self.__mailPath, "r", encoding="utf-8") as file:
             self.MailContent= str(file.read())
 
 
@@ -120,16 +120,16 @@ class Mail:
         self.recEmails = input(self.__langDict['42'])
         self.recEmailsArr = self.recEmails.split(', ')
 
-        '''
-            def __str__(self) -> str:
-                final = ""
-                final += self.__langDict['29']
-                final += "\n" + self.__langDict['30'] + self.subject
-                if self.__mailPath != "": final += "\n" + self.__langDict['31'] + self.__mailPath
-                final += "\n" + self.__langDict['32'] + str(self.recEmailsArr)
-                if self.__attachmentsBool: final += "\n" + self.__langDict['33'] + str(self.attachmentsArr)
-                return final
-        '''
+        
+    def __str__(self) -> str:
+        final = ""
+        final += self.__langDict['29']
+        final += "\n" + self.__langDict['30'] + self.subject
+        if self.__mailPath != "": final += "\n" + self.__langDict['31'] + self.__mailPath
+        final += "\n" + self.__langDict['32'] + str(self.recEmailsArr)
+        if self.__attachmentsBool: final += "\n" + self.__langDict['33'] + str(self.attachmentsArr)
+        return final
+        
   
     def encodeJson(self):
         final = {

@@ -182,6 +182,7 @@ class MailSender:
                         print(self.__langDict['36'])
                 else:
                     self.ExitMail.importInfo()
+                    print()
                     print(self.ExitMail)
                     self.ExitMail.webbBrowserViewer(False)
                     send_dec = CF.Menu_Bool(self.__langDict['35'], [self.__langDict['19'], self.__langDict['20']], 1, self.__langDict['15']) # If True -> Send mail
