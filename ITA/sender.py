@@ -25,16 +25,11 @@ class MailSender:
         self.__lang = 'It'.title()
         self.__data_dict = CF.jsonLoader(f"mailInfo{self.__lang}.json")
         self.__langDict = CF.jsonLoader(f"lang{self.__lang}.json")
-        self.__userInfoDict = CF.jsonLoader("userInfo.json")
+        self.__userInfoDict_pre = CF.jsonLoader("userInfo.json")
+        self.__varsDict = CF.jsonLoader("vars.json")
+        self.__userInfoDict = {}
 
-        #Params
-        self.__myEmail = self.__userInfoDict["myEmail"]
-        self.__formatEmail = formataddr((self.__userInfoDict["name"], self.__userInfoDict["myEmail"]))
-        self.__email_pass = self.__userInfoDict["gmailPass"]
-        self.__replyEmail = formataddr((self.__userInfoDict["name"], self.__userInfoDict["myEmail"]))
-        self.ExitMail = Mail()
-        self.ExitMail.sendedFrom = self.__myEmail
-        
+
 
         print('''
               
@@ -50,11 +45,55 @@ class MailSender:
         print(self.__langDict['49'] + str(MailSender.__version))
         self.mem.version = MailSender.__version
 
+        if self.__varsDict['last_user'] == "" or str(self.__varsDict['last_user']).isspace():
+            print('\n')
+            self.userSelect()
+        else:
+            self.userInfoUpdateVars()
+            print(self.__langDict['61'] + self.__myName)
+            print('\n')
+
         if self.__myEmail == "" or self.__myEmail.isspace() or self.__email_pass == "" or self.__email_pass.isspace() or self.__userInfoDict["name"] == "" or self.__userInfoDict["name"].isspace():
             print(self.__langDict['57'])
             self.conf_minimum = False
         else:
             self.conf_minimum = True
+
+    def userInfoSelect(self, mail: str):
+        final_dict = {}
+        for dict in self.__userInfoDict_pre['users']:
+            if dict["myEmail"] == mail:
+                final_dict = dict
+        self.__userInfoDict = final_dict
+
+    def userInfoUpdateVars(self):
+        last_user_mail = self.__varsDict['last_user']
+        self.userInfoSelect(last_user_mail)
+
+        self.__myEmail = self.__userInfoDict["myEmail"]
+        self.__formatEmail = formataddr((self.__userInfoDict["name"], self.__userInfoDict["myEmail"]))
+        self.__myName = self.__userInfoDict["name"]
+        self.__email_pass = self.__userInfoDict["gmailPass"]
+        self.__replyEmail = formataddr((self.__userInfoDict["name"], self.__userInfoDict["myEmail"]))
+        self.ExitMail = Mail()
+        self.ExitMail.sendedFrom = self.__myEmail
+
+    def userSelect(self):
+        names_arr = []
+        users_arr = self.__userInfoDict_pre['users']
+        for dict in users_arr:
+            names_arr.append(dict["name"])
+
+        user_selected_int = CF.Menu_Int(self.__langDict["60"], names_arr, self.__langDict['15'])
+
+        user_selected_dict = users_arr[user_selected_int - 1]
+        user_selected_mail = user_selected_dict["myEmail"]
+        
+        self.__varsDict['last_user'] = user_selected_mail
+
+        CF.jsonWriter('vars.json', self.__varsDict)
+
+        self.userInfoUpdateVars()
 
     def compileMail(self):
         mail = Mail()
@@ -164,12 +203,13 @@ class MailSender:
     def menuWrapper(self):
         mail_is_sent = False
         if self.conf_minimum:
-            buildOrSelect = CF.Menu_Bool(self.__langDict['12'], [self.__langDict['13'], self.__langDict['14']], 1, self.__langDict['15']) # If True -> Select existing email
-            if buildOrSelect:
+            buildOrSelect = CF.Menu_Int(self.__langDict['12'], [self.__langDict['13'], self.__langDict['14'], self.__langDict['62']], self.__langDict['15']) # If True -> Select existing email
+            
+            if buildOrSelect == 1:
                 newOrImport = CF.Menu_Bool(self.__langDict['12'], [self.__langDict['27'], self.__langDict['28']], 1, self.__langDict['15']) # If True -> Build new mail
                 if newOrImport:
                     self.ExitMail.basicInfoUserWrapper()
-                    HTMLMail = HTMLMailBuilder()
+                    HTMLMail = HTMLMailBuilder(self.__userInfoDict)
                     mail_content = HTMLMail.builderMenu()
                     self.attachmentsMenu()
                     self.ExitMail.MailContent = mail_content
@@ -191,7 +231,8 @@ class MailSender:
                         mail_is_sent = True
                     else:
                         print(self.__langDict['36'])
-            else:
+            
+            elif buildOrSelect == 2:
                 
                 recent_mails_t = self.mailReader(input(self.__langDict['16']))
                 recent_mails_f = recent_mails_t["recent_mails_formatted"]
@@ -200,7 +241,7 @@ class MailSender:
                 EmailSelect = recent_mails[EmailSelect_i - 1]
                 
 
-                HTMLMail = HTMLMailBuilder()
+                HTMLMail = HTMLMailBuilder(self.__userInfoDict)
 
                 HTMLMail.addResponse(EmailSelect["From"], EmailSelect["Subject"], EmailSelect["Date"], EmailSelect["Body"])
                 mail_content = HTMLMail.builderMenu()
@@ -220,6 +261,10 @@ class MailSender:
                     mail_is_sent = True
                 else:
                     print(self.__langDict['36'])
+            
+            elif buildOrSelect == 3:
+                self.userSelect()
+                print('\n' + self.__langDict['63'])
 
         print(self.__langDict['48'] + str(self.mem.strTime(self.mem.stopTimeUpdate())) + '\n')
 

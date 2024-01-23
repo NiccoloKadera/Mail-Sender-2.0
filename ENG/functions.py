@@ -322,12 +322,12 @@ class HTMLMailBuilder:
             ''')
 
 
-    def __init__(self) -> None:
+    def __init__(self, user_dict) -> None:
         self.__lang = 'Eng'.title()
         self.FullMail = ""
         self.__fullMailArr = []
         self.__langDict = CF.jsonLoader(f"lang{self.__lang}.json")
-        self.__userInfoDict = CF.jsonLoader("userInfo.json")
+        self.__userInfoDict = user_dict
         self.addHeader()
         
 
