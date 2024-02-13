@@ -12,7 +12,7 @@ import os
 from imaplib import IMAP4
 import email
 import imaplib
-
+from bs4 import BeautifulSoup
 
 
 class MailSender:
@@ -187,7 +187,23 @@ class MailSender:
                         mail_body = ""
                         for part in msg.walk():
                             if part.get_content_maintype() == 'text' or part.get_content_maintype() == 'plain':
-                                mail_body = part.get_payload().replace('<div dir="auto">', "")
+                                try:
+                                    mail_body_pre = part.get_payload(decode=True)
+                                    charset = part.get_content_charset('iso-8859-1')
+                                    mail_body = mail_body_pre.decode(charset, 'replace')
+                                except Exception:
+                                    mail_body = part.get_payload().replace('<div dir="auto">', "")
+
+
+                        if '<html>' in mail_body or '<body>' in mail_body or '<!DOCTYPE html' in mail_body:
+                            soup = BeautifulSoup(mail_body, features="html.parser")
+                            for script in soup(["script", "style"]):
+                                script.extract()
+                            text = soup.get_text()
+                            lines = (line.strip() for line in text.splitlines())
+                            chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
+                            text = '\n'.join(chunk for chunk in chunks if chunk)
+                            mail_body = text
                         
                         msg_dict = {"From": mail_from, "Subject": mail_subject, "Date": mail_date, "Body": mail_body}
                         recent_mails.append(msg_dict)
